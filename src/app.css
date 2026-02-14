@@ -1,39 +1,187 @@
-body {
-  font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark --prefersdark;
 }
 
-a {
-  margin-right: 1rem;
-}
-
-main {
-  text-align: center;
-  padding: 1em;
-  margin: 0 auto;
-}
-
-h1 {
-  color: #335d92;
-  text-transform: uppercase;
-  font-size: 4rem;
-  font-weight: 100;
-  line-height: 1.1;
-  margin: 4rem auto;
-  max-width: 14rem;
-}
-
-p {
-  max-width: 14rem;
-  margin: 2rem auto;
-  line-height: 1.35;
-}
-
-@media (min-width: 480px) {
-  h1 {
-    max-width: none;
+/* Custom Theme Overrides */
+@layer base {
+  :root,
+  [data-theme="light"] {
+    --color-primary: oklch(62.8% 0.202 248.17); /* Sky 500 */
+    --color-base-100: oklch(100% 0 0); /* White */
   }
 
-  p {
-    max-width: none;
+  [data-theme="dark"] {
+    --color-primary: oklch(62.8% 0.202 248.17); /* Sky 500 */
   }
+}
+
+/* Prose / Markdown content styling */
+.prose {
+  @apply text-base-content leading-relaxed;
+  max-width: 75ch;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold mt-8 mb-4 text-base-content;
+}
+
+.prose h2 {
+  @apply text-2xl font-semibold mt-8 mb-3 pb-2 border-b border-base-300 text-base-content;
+}
+
+.prose h3 {
+  @apply text-xl font-semibold mt-6 mb-2 text-base-content;
+}
+
+.prose h4 {
+  @apply text-lg font-semibold mt-4 mb-2 text-base-content;
+}
+
+.prose p {
+  @apply my-4;
+}
+
+.prose a {
+  @apply text-primary hover:text-primary/80 underline underline-offset-2;
+}
+
+.prose strong {
+  @apply font-semibold text-base-content;
+}
+
+.prose ul {
+  @apply my-4 pl-6 list-disc;
+}
+
+.prose ol {
+  @apply my-4 pl-6 list-decimal;
+}
+
+.prose li {
+  @apply my-1;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary/40 pl-4 italic my-4 text-base-content/70;
+}
+
+.prose hr {
+  @apply my-8 border-base-300;
+}
+
+.prose table {
+  @apply w-full my-4 text-sm;
+}
+
+.prose thead {
+  @apply border-b-2 border-base-300;
+}
+
+.prose th {
+  @apply text-left py-2 px-3 font-semibold text-base-content;
+}
+
+.prose td {
+  @apply py-2 px-3 border-b border-base-200;
+}
+
+.prose img {
+  @apply rounded-lg my-4;
+}
+
+/* Code blocks (rehype-pretty-code) */
+.prose pre {
+  @apply my-4 p-4 rounded-lg overflow-x-auto text-sm leading-relaxed;
+  background-color: var(--shiki-light-bg, oklch(0.253267 0.015896 252.417568));
+}
+
+[data-theme="dark"] .prose pre,
+.prose pre[data-theme="dark"] {
+  background-color: var(--shiki-dark-bg, oklch(0.205 0.012 252.42));
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-sm;
+}
+
+.prose code {
+  @apply bg-base-200 text-base-content px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.prose pre code {
+  @apply bg-transparent px-0 py-0;
+}
+
+/* Shiki dual theme support */
+.prose pre span[data-highlighted-line] {
+  @apply bg-primary/10 -mx-4 px-4 border-l-2 border-primary;
+}
+
+html[data-theme="dark"] .prose pre code span {
+  color: var(--shiki-dark) !important;
+}
+
+html[data-theme="light"] .prose pre code span {
+  color: var(--shiki-light) !important;
+}
+
+/* Heading anchors */
+.prose h1 a,
+.prose h2 a,
+.prose h3 a,
+.prose h4 a {
+  @apply no-underline text-base-content hover:text-primary;
+}
+
+/* Admonition / Alert boxes */
+.admonition {
+  @apply my-4 p-4 rounded-lg border;
+}
+
+.admonition-note {
+  @apply bg-info/10 border-info/30 text-info;
+}
+
+.admonition-tip {
+  @apply bg-success/10 border-success/30 text-success;
+}
+
+.admonition-warning {
+  @apply bg-warning/10 border-warning/30 text-warning;
+}
+
+.admonition-danger {
+  @apply bg-error/10 border-error/30 text-error;
+}
+
+/* Table of Contents active state */
+.toc-link.active {
+  @apply text-primary font-medium border-primary;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-base-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-base-content/30;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
