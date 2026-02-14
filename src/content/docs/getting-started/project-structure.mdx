@@ -1,0 +1,78 @@
+---
+title: Project Structure
+description: Understanding the Natee Docs project directory structure
+---
+
+# Project Structure
+
+Here's an overview of the key files and directories in a Natee Docs project:
+
+```
+my-docs/
+├── public/                 # Static assets
+│   └── favicon.ico
+├── src/
+│   ├── components/         # Reusable UI components
+│   │   ├── Navbar.tsx      # Top navigation bar
+│   │   ├── Sidebar.tsx     # Documentation sidebar
+│   │   ├── DocLayout.tsx   # Documentation page wrapper
+│   │   ├── TableOfContents.tsx  # Right-side TOC
+│   │   ├── Footer.tsx      # Site footer
+│   │   ├── ThemeToggle.tsx # Light/dark mode switch
+│   │   ├── SearchDialog.tsx # Search modal
+│   │   └── mdx-components.tsx  # Custom MDX overrides
+│   ├── content/
+│   │   └── docs/           # MDX documentation files
+│   │       ├── getting-started/
+│   │       ├── guides/
+│   │       └── api/
+│   ├── routes/             # Application routes
+│   │   ├── __root.tsx      # Root layout
+│   │   ├── index.tsx       # Home / landing page
+│   │   └── docs/
+│   │       └── $.tsx       # Dynamic docs route
+│   ├── docs.config.ts      # Sidebar configuration
+│   ├── app.css             # Global styles
+│   ├── app.tsx             # App entry point
+│   └── router.tsx          # Router configuration
+├── app.config.ts           # Vite + SolidStart config
+├── package.json
+└── tsconfig.json
+```
+
+## Key Directories
+
+### `src/content/docs/`
+
+This is where your documentation lives. Each `.mdx` file becomes a documentation page. Files are organized into categories that map to the sidebar sections.
+
+Every MDX file should include frontmatter:
+
+```mdx
+---
+title: Page Title
+description: A brief description of the page
+---
+
+# Your Content Here
+```
+
+### `src/components/`
+
+Reusable UI components used across the site. The most important ones:
+
+- **`DocLayout.tsx`** — Wraps doc pages with sidebar, content area, and TOC
+- **`Sidebar.tsx`** — Navigation sidebar driven by `docs.config.ts`
+- **`mdx-components.tsx`** — Custom components available in MDX files
+
+### `src/routes/`
+
+File-based routing powered by TanStack Router. The `docs/$.tsx` file is a catch-all route that handles all documentation URLs.
+
+## Adding New Pages
+
+1. Create a new `.mdx` file in `src/content/docs/`
+2. Add the page to `src/docs.config.ts` sidebar config
+3. Register the lazy import in `src/routes/docs/$.tsx`
+
+That's it! The page will automatically appear in the sidebar and be navigable.

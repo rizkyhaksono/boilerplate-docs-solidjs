@@ -1,0 +1,130 @@
+---
+title: Markdown Features
+description: All the markdown and MDX features available in Natee Docs
+---
+
+# Markdown Features
+
+Natee Docs supports all standard Markdown features plus GitHub Flavored Markdown (GFM) extensions and custom MDX components.
+
+## Basic Formatting
+
+You can use all the standard Markdown formatting:
+
+- **Bold text** with `**double asterisks**`
+- _Italic text_ with `*single asterisks*`
+- ~~Strikethrough~~ with `~~tildes~~`
+- `Inline code` with backticks
+
+## Headings
+
+Use `#` for headings. Each heading automatically gets an anchor link for easy sharing:
+
+```markdown
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+```
+
+## Code Blocks
+
+Code blocks support syntax highlighting powered by Shiki with dual-theme support:
+
+```typescript
+// TypeScript example with syntax highlighting
+interface DocConfig {
+  title: string
+  description: string
+  sidebar: SidebarCategory[]
+}
+
+function getDocBySlug(slug: string): DocConfig | null {
+  const docs = getAllDocs()
+  return docs.find((doc) => doc.slug === slug) ?? null
+}
+```
+
+```jsx
+// JSX component example
+function Button(props) {
+  return (
+    <button class="btn btn-primary" onClick={props.onClick}>
+      {props.children}
+    </button>
+  )
+}
+```
+
+```css
+/* CSS example */
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+```
+
+## Tables
+
+GFM tables are fully supported:
+
+| Syntax        | Description | Example                     |
+| ------------- | ----------- | --------------------------- |
+| `**bold**`    | Bold text   | **bold**                    |
+| `*italic*`    | Italic text | _italic_                    |
+| `` `code` ``  | Inline code | `code`                      |
+| `[link](url)` | Hyperlink   | [link](https://solidjs.com) |
+
+## Lists
+
+### Unordered Lists
+
+- First item
+- Second item
+  - Nested item
+  - Another nested item
+- Third item
+
+### Ordered Lists
+
+1. First step
+2. Second step
+3. Third step
+
+### Task Lists
+
+- [x] Set up project
+- [x] Install dependencies
+- [ ] Write documentation
+- [ ] Deploy to production
+
+## Blockquotes
+
+> This is a blockquote. It's great for highlighting important information
+> or quoting external sources.
+
+## Links
+
+- [External link](https://solidjs.com)
+- [Internal link](/docs/getting-started/introduction)
+
+## Horizontal Rules
+
+Use three dashes for a horizontal rule:
+
+---
+
+## Images
+
+```markdown
+![Alt text](https://example.com/image.png)
+```
+
+## Math & Special Characters
+
+Special characters are properly escaped: &amp; &lt; &gt; &quot;

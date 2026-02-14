@@ -1,0 +1,93 @@
+---
+title: Using Components
+description: How to use custom components in your MDX documentation
+---
+
+# Using Components
+
+One of the most powerful features of MDX is the ability to use JSX components directly in your Markdown files.
+
+## Built-in Components
+
+Natee Docs comes with several built-in components you can use in any MDX file:
+
+### Admonitions
+
+Admonitions are colored callout boxes for highlighting important content:
+
+<Note>This is an informational note. Use it to provide additional context or background information.</Note>
+
+<Tip>This is a helpful tip! Use it for best practices and optimization suggestions.</Tip>
+
+<Warning>This is a warning. Use it to alert users about potential issues or breaking changes.</Warning>
+
+<Danger>This is dangerous! Use it for critical security warnings or data-loss scenarios.</Danger>
+
+### Usage
+
+```mdx
+<Note>This is a note with default title.</Note>
+
+<Tip title="Custom Title">You can customize the title too!</Tip>
+
+<Warning>Be careful with this operation.</Warning>
+
+<Danger>This will delete all your data!</Danger>
+```
+
+## Creating Custom Components
+
+You can create your own components and make them available in MDX:
+
+### Step 1: Create the Component
+
+```tsx
+// src/components/MyComponent.tsx
+export default function MyComponent(props) {
+  return (
+    <div class="card bg-base-200 p-4 my-4">
+      <h3 class="font-bold">{props.title}</h3>
+      <p>{props.children}</p>
+    </div>
+  )
+}
+```
+
+### Step 2: Register in MDX Components
+
+```tsx
+// src/components/mdx-components.tsx
+import MyComponent from "./MyComponent"
+
+export const mdxComponents = {
+  // ... existing components
+  MyComponent,
+}
+```
+
+### Step 3: Use in MDX
+
+```mdx
+<MyComponent title="Hello World">This is my custom component!</MyComponent>
+```
+
+## Importing Components Directly
+
+You can also import components directly in an MDX file:
+
+```mdx
+import MyChart from "~/components/MyChart"
+
+# Analytics Dashboard
+
+Here's the data visualization:
+
+<MyChart data={[1, 2, 3, 4, 5]} />
+```
+
+## Best Practices
+
+1. **Keep MDX components simple** — Complex logic should live in the component file, not inline
+2. **Use named exports** — It makes components easier to discover and import
+3. **Add TypeScript types** — Type your component props for better DX
+4. **Document your components** — Add JSDoc comments describing usage

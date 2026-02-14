@@ -1,0 +1,159 @@
+---
+title: Configuration
+description: API reference for configuring your Natee Docs site
+---
+
+# Configuration
+
+Natee Docs is configured through several files. This reference covers all available options.
+
+## Site Configuration
+
+### `docs.config.ts`
+
+The main configuration file for your documentation site:
+
+```typescript
+export interface DocsConfig {
+  title: string // Site title shown in navbar
+  tagline: string // Subtitle shown on landing page
+  sidebar: DocCategory[]
+}
+
+export interface DocCategory {
+  title: string // Category display name
+  items: DocItem[] // Pages in this category
+}
+
+export interface DocItem {
+  title: string // Page title in sidebar
+  slug: string // URL path (relative to /docs/)
+}
+```
+
+### Example Configuration
+
+```typescript
+export const docsConfig: DocsConfig = {
+  title: "My Docs",
+  tagline: "Documentation for my awesome project",
+  sidebar: [
+    {
+      title: "Getting Started",
+      items: [
+        { title: "Introduction", slug: "getting-started/introduction" },
+        { title: "Installation", slug: "getting-started/installation" },
+      ],
+    },
+    {
+      title: "API Reference",
+      items: [{ title: "Configuration", slug: "api/configuration" }],
+    },
+  ],
+}
+```
+
+## Vite Configuration
+
+### `app.config.ts`
+
+The Vite/SolidStart configuration file. Key options:
+
+```typescript
+import { defineConfig } from "@solidjs/start/config"
+
+export default defineConfig({
+  extensions: ["mdx"], // Enable MDX file support
+  vite: {
+    plugins: [
+      tailwindcss(), // Tailwind CSS v4
+      mdx({
+        // MDX processing
+        jsxImportSource: "solid-jsx",
+        remarkPlugins: [
+          /* ... */
+        ],
+        rehypePlugins: [
+          /* ... */
+        ],
+      }),
+    ],
+  },
+})
+```
+
+### MDX Plugin Options
+
+| Option                 | Type       | Description                            |
+| ---------------------- | ---------- | -------------------------------------- |
+| `jsxImportSource`      | `string`   | JSX runtime to use (`solid-jsx`)       |
+| `providerImportSource` | `string`   | MDX provider (`solid-mdx`)             |
+| `remarkPlugins`        | `Plugin[]` | Remark plugins for Markdown processing |
+| `rehypePlugins`        | `Plugin[]` | Rehype plugins for HTML processing     |
+
+### Included Plugins
+
+| Plugin                   | Purpose                                                |
+| ------------------------ | ------------------------------------------------------ |
+| `remark-gfm`             | GitHub Flavored Markdown (tables, strikethrough, etc.) |
+| `remark-frontmatter`     | Parse YAML frontmatter                                 |
+| `remark-mdx-frontmatter` | Export frontmatter as MDX variables                    |
+| `rehype-slug`            | Add `id` attributes to headings                        |
+| `rehype-pretty-code`     | Syntax highlighting via Shiki                          |
+
+## Styling Configuration
+
+### `app.css`
+
+Tailwind CSS v4 with DaisyUI:
+
+```css
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark --prefersdark;
+}
+```
+
+### Available Themes
+
+DaisyUI provides many built-in themes. To change the default themes, modify the `themes` option:
+
+```css
+@plugin "daisyui" {
+  themes:
+    emerald --default,
+    forest --prefersdark;
+}
+```
+
+Some popular theme combinations:
+
+| Light Theme | Dark Theme | Vibe         |
+| ----------- | ---------- | ------------ |
+| `light`     | `dark`     | Default      |
+| `emerald`   | `forest`   | Green        |
+| `corporate` | `business` | Professional |
+| `cupcake`   | `dracula`  | Playful      |
+
+## TypeScript Configuration
+
+The `tsconfig.json` includes path aliases for clean imports:
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  }
+}
+```
+
+Use `~/` to import from the `src` directory:
+
+```typescript
+import { docsConfig } from "~/docs.config"
+import DocLayout from "~/components/DocLayout"
+```
