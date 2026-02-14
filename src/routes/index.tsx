@@ -1,22 +1,131 @@
-import { createFileRoute } from "@tanstack/solid-router";
-import Counter from "~/components/Counter";
+import { createFileRoute, Link } from "@tanstack/solid-router"
+import { For } from "solid-js"
+import { docsConfig } from "~/docs.config"
+import Footer from "~/components/Footer"
 
 export const Route = createFileRoute("/")({
-  component: RouteComponent
-});
+  component: HomePage,
+})
 
-function RouteComponent() {
+function HomePage() {
+  const features = [
+    {
+      icon: "⚡",
+      title: "Blazing Fast",
+      description: "Powered by SolidJS fine-grained reactivity. No virtual DOM overhead — just raw performance.",
+    },
+    {
+      icon: "📝",
+      title: "MDX Support",
+      description: "Write documentation in MDX with full component support. Syntax highlighting, GFM tables, and more.",
+    },
+    {
+      icon: "🎨",
+      title: "Beautiful UI",
+      description: "Built with Tailwind CSS and DaisyUI. Dark mode, responsive design, and customizable themes.",
+    },
+    {
+      icon: "🔍",
+      title: "Instant Search",
+      description: "Client-side search with keyboard shortcuts. Find any page instantly with Ctrl+K.",
+    },
+    {
+      icon: "📱",
+      title: "Fully Responsive",
+      description: "Mobile-first design with collapsible sidebar, touch-friendly navigation, and optimized layouts.",
+    },
+    {
+      icon: "🧩",
+      title: "Extensible",
+      description: "Custom MDX components, configurable sidebar, and easy-to-extend architecture.",
+    },
+  ]
+
   return (
-    <main>
-      <h1>Hello world!</h1>
-      <Counter />
-      <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
-      </p>
-    </main>
-  );
+    <div>
+      {/* Hero Section */}
+      <section class="relative overflow-hidden">
+        {/* Background gradient */}
+        <div class="absolute inset-0 bg-base-100 pointer-events-none" />
+
+        <div class="max-w-5xl mx-auto px-4 py-20 lg:py-32 text-center relative">
+          {/* Badge */}
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8 border border-primary/20">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            Open Source · Free to Collaborate
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-base-content mb-6 leading-tight">
+            <span class="text-primary">Natee Docs</span>
+            <br />
+            Documentation Boilerplate
+          </h1>
+
+          <p class="text-lg sm:text-xl text-base-content/60 max-w-2xl mx-auto mb-10 leading-relaxed">{docsConfig.tagline}. Built with SolidJS, MDX, dark mode, search, and everything you need for your next project.</p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link to="/docs/$" params={{ _splat: "getting-started/introduction" }} class="btn btn-primary btn-lg gap-2 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all">
+              Get Started
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+            <a href="https://github.com/rizkyhaksono/boilerplate-docs-solidjs" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section class="py-20 bg-base-200/30">
+        <div class="max-w-6xl mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-4">Everything You Need</h2>
+          <p class="text-center text-base-content/60 mb-12 max-w-xl mx-auto">A complete documentation boilerplate for Natee projects — ready to use, open source, and fully customizable.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <For each={features}>
+              {(feature) => (
+                <div class="card bg-base-100 shadow-sm border border-base-200 hover:shadow-md hover:border-primary/20 transition-all duration-300 group">
+                  <div class="card-body">
+                    <div class="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
+                    <h3 class="card-title text-lg">{feature.title}</h3>
+                    <p class="text-base-content/60 text-sm">{feature.description}</p>
+                  </div>
+                </div>
+              )}
+            </For>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section class="py-20">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+          <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <p class="text-base-content/60 mb-8">Start building your documentation in minutes. Clone the repo and make it yours.</p>
+          <div class="mockup-code bg-neutral text-neutral-content max-w-lg mx-auto text-left">
+            <pre data-prefix="$">
+              <code>git clone https://github.com/rizkyhaksono/boilerplate-docs-solidjs</code>
+            </pre>
+            <pre data-prefix="$">
+              <code>bun install</code>
+            </pre>
+            <pre data-prefix="$" class="text-success">
+              <code>bun run dev</code>
+            </pre>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  )
 }
